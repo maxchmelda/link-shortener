@@ -1,6 +1,6 @@
 import { normalizeUrl } from "@/lib/isUrlValid";
 import { supabase } from "@/lib/supabase";
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 
 
 
@@ -16,6 +16,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     if (error) {
         return NextResponse.redirect(`http://${process.env.PROJECT_DOMAIN}/not-found`);
     }
+
+    after(async () => {
+        await supabase
+        .from('links')
+        .update({ last_clicked_at: new Date().toISOString() })
+        .eq('code', code);
+    });
 
     return NextResponse.redirect(normalizeUrl(data.original_url));
 }
