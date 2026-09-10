@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Short Link Generator
 
-## Getting Started
+A URL shortener built with Next.js, featuring an animated interactive dot-field background, instant link generation with collision-safe code generation, and automatic cleanup of stale links via a Postgres cron job.
 
-First, run the development server:
+**Live at [link.maxch.dev](https://link.maxch.dev)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Short Link Generator screenshot](public/screenshot.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Paste a URL, get a short link back in a copyable dialog
+- Client- and server-side URL validation (rejects non-domain-looking input)
+- Collision-aware short code generation — retries with a longer code after repeated collisions
+- Redirect route that resolves a short code and 302s to the original URL
+- `last_clicked_at` tracked on every visit via `after()`, without blocking the redirect
+- Daily cron job (pg_cron) that deletes links unclicked for 30+ days
+- Animated interactive dot-field background (canvas + SVG glow, cursor-reactive)
+- Dark theme, glassmorphism UI, responsive down to mobile widths
+- UI built with Tailwind CSS and shadcn-style components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+- [app/page.tsx](app/page.tsx) — main entry page
+- [app/[code]/route.ts](app/[code]/route.ts) — resolves a short code and redirects to the original URL
+- [app/api/links/route.ts](app/api/links/route.ts) — creates a new short link
+- [app/not-found/page.tsx](app/not-found/page.tsx) — shown when a short code doesn't resolve
+- [components/CreateLink.tsx](components/CreateLink.tsx) — URL input + shorten form
+- [components/LinkDisplayModal.tsx](components/LinkDisplayModal.tsx) — dialog showing the generated link with copy-to-clipboard
+- [components/ErrorMessage.tsx](components/ErrorMessage.tsx) — dismissing toast for form errors
+- [components/DotField.tsx](components/DotField.tsx) — animated interactive dot-field background
+- [lib/generateCode.ts](lib/generateCode.ts) — random short code generator
+- [lib/isUrlValid.ts](lib/isUrlValid.ts) — URL validation and normalization
+- [lib/supabase.ts](lib/supabase.ts) — Supabase client
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, react-icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Backend / Data
 
-## Deploy on Vercel
+Links are stored in a `links` table in Supabase (Postgres):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| column           | type          | notes                          |
+| ---------------- | ------------- | ------------------------------- |
+| `code`           | `text`        | primary key, the short code      |
+| `original_url`   | `text`        | normalized, absolute URL         |
+| `created_at`     | `timestamptz` |                                   |
+| `last_clicked_at`| `timestamptz` | updated on every redirect visit  |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**RLS:** `UPDATE` is allowed for both `anon` and `authenticated` roles with no restriction (`USING (true) WITH CHECK (true)`), so `last_clicked_at` can be bumped straight from the redirect route using the public client.
+
+**Cleanup cron:** a `pg_cron` job (`delete-old-links`) runs daily at 03:00 UTC and deletes any row where `last_clicked_at < now() - interval '30 days'`, so links that stop being used eventually get garbage-collected.
