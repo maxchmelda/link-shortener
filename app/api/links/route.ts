@@ -1,5 +1,5 @@
 import generateCode from "@/lib/generateCode";
-import isUrlValid from "@/lib/isUrlValid";
+import isUrlValid, { normalizeUrl } from "@/lib/isUrlValid";
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const { error: insertError } = await supabase
     .from('links')
     .insert({
-        original_url: url,
+        original_url: normalizeUrl(url),
         code
     })
 

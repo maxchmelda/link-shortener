@@ -38,12 +38,14 @@ const CreateLink = () => {
   }
 
   return (
-    <Field className='w-100'>
+    <>
+    <Field className='w-full max-w-md gap-5 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
       <div className='flex items-center gap-2'>
         <Input
-          type="url" 
-          placeholder="enter your link here" 
-          onChange={(e) => { 
+          type="url"
+          placeholder="enter your link here"
+          className="h-11 rounded-xl text-base"
+          onChange={(e) => {
             setUrl(e.target.value);
             setError(null);
           }}
@@ -54,9 +56,9 @@ const CreateLink = () => {
           }}
           value={url}
         />
-        <Button 
-          variant="outline"
-          className="text-black cursor-pointer"
+        <Button
+          variant="default"
+          className="h-11 shrink-0 rounded-xl cursor-pointer transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97]"
           onClick={() => handleShorten()}
         >
           Shorten
@@ -64,17 +66,18 @@ const CreateLink = () => {
       </div>
 
       <FieldDescription>
-        Your original link will be stored on our database
+        Your original link will be stored on our databases
       </FieldDescription>
       
-      <LinkDisplayModal 
+      <LinkDisplayModal
         url={shortenedUrl}
         open={shortenedUrl !== null}
         onClose={() => setShortenedUrl(null)}
       />
-
-      <ErrorMessage error={error} />
     </Field>
+
+    <ErrorMessage error={error} />
+    </>
   )
 }
 

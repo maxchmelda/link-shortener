@@ -1,18 +1,18 @@
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 
-const page = () => {
+export default function NotFound() {
   return (
-    <div className="w-full h-full min-h-screen flex flex-col justify-center items-center gap-6 px-4 text-foreground">
+    <div className='w-full h-full min-h-screen flex flex-col justify-center items-center gap-6 px-4 text-foreground'>
       <div className='fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,oklch(0.24_0.05_270)_0%,oklch(0.09_0.012_264)_55%,oklch(0.07_0.01_264)_100%)]'></div>
 
       <div className='flex flex-col items-center gap-3 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
         <span className='bg-linear-to-b from-foreground to-foreground/60 bg-clip-text text-7xl font-bold tracking-tight text-transparent sm:text-8xl'>
           404
         </span>
-        <h1 className='text-2xl font-semibold'>Page not found</h1>
+        <h1 className='text-2xl font-semibold'>This link doesn&apos;t exist</h1>
         <p className='max-w-sm text-muted-foreground'>
-          This short link doesn&apos;t exist, is broken, or has expired.
+          The short link you followed may be broken, expired, or never existed.
         </p>
       </div>
 
@@ -23,10 +23,8 @@ const page = () => {
           className: "rounded-xl transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97]",
         })}
       >
-        Create short link
+        Go back home
       </Link>
     </div>
   )
 }
-
-export default page
