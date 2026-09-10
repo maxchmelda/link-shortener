@@ -15,6 +15,13 @@ const CreateLink = () => {
   const [error, setError] = React.useState<string | null>("Some error i dont know wth!");
   const [shortenedUrl, setShortenedUrl] = React.useState<string | null>(null);
 
+  React.useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null);
+      }, 5000)
+    }
+  }, [error])
 
   const handleShorten = async () => {
     try {

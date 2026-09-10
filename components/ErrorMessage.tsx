@@ -7,8 +7,6 @@ import {
 import { InfoIcon } from "lucide-react"
 
 const ErrorMessage = ({ error } : { error: string | null}) => {
-  
-  
   if (error) return (
     <Alert className="fixed top-5 right-5 max-w-80">
         <InfoIcon />
