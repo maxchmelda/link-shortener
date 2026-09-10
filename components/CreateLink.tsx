@@ -6,6 +6,7 @@ import { Field, FieldDescription, FieldLabel } from './ui/field'
 import { Button } from './ui/button'
 import LinkDisplayModal from './LinkDisplayModal';
 import shortenUrl from '@/lib/shortenUrl';
+import isUrlValid from '@/lib/isUrlValid';
 
 
 const CreateLink = () => {
@@ -16,6 +17,11 @@ const CreateLink = () => {
 
   const handleShorten = async () => {
     try {
+      if (!isUrlValid(url)) {
+        setError("Please enter a valid link!");
+        return;
+      }
+
       const shortened = await shortenUrl(url);
       setShortenedUrl(shortened);
     } catch (err) {
@@ -29,7 +35,10 @@ const CreateLink = () => {
         <Input
           type="url" 
           placeholder="enter your link here" 
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => { 
+            setUrl(e.target.value);
+            setError(null);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleShorten();
