@@ -23,6 +23,7 @@ const LinkDisplayModal = ({ url, open, onClose } : Props) => {
                 <span className='py-1 w-full text-start px-2 border rounded-lg cursor-text'>{url ?? ""}</span>
                 <Button
                     className="flex items-center gap-2 justify-center px-2 py-1 cursor-pointer"
+                    onClick={() => navigator.clipboard.writeText(url ?? "")}
                 >
                     <MdContentCopy />
                     <span>Copy</span>
