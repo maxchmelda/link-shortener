@@ -39,11 +39,12 @@ const CreateLink = () => {
 
   return (
     <>
-    <Field className='w-full max-w-md gap-5 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
+    <Field className='w-full max-w-md gap-5 rounded-2xl border border-white/10 bg-white/5 p-1 shadow-2xl shadow-black/40 backdrop-blur-xl animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
       <div className='flex items-center gap-2'>
         <Input
+          id="url"
           type="url"
-          placeholder="enter your link here"
+          placeholder="https://youtube.com/isdfkshbfhs..."
           className="h-11 rounded-xl text-base"
           onChange={(e) => {
             setUrl(e.target.value);
@@ -64,10 +65,6 @@ const CreateLink = () => {
           Shorten
         </Button>
       </div>
-
-      <FieldDescription>
-        Your original link will be stored on our databases
-      </FieldDescription>
       
       <LinkDisplayModal
         url={shortenedUrl}
