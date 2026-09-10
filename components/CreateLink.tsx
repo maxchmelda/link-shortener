@@ -7,11 +7,12 @@ import { Button } from './ui/button'
 import LinkDisplayModal from './LinkDisplayModal';
 import shortenUrl from '@/lib/shortenUrl';
 import isUrlValid from '@/lib/isUrlValid';
+import ErrorMessage from './ErrorMessage';
 
 
 const CreateLink = () => {
   const [url, setUrl] = React.useState<string>("");
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>("Some error i dont know wth!");
   const [shortenedUrl, setShortenedUrl] = React.useState<string | null>(null);
 
 
@@ -64,6 +65,8 @@ const CreateLink = () => {
         open={shortenedUrl !== null}
         onClose={() => setShortenedUrl(null)}
       />
+
+      <ErrorMessage error={error} />
     </Field>
   )
 }
