@@ -6,7 +6,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='w-full h-full min-h-screen flex flex-col justify-center items-center gap-10 px-4 text-foreground'>
+    <div className='w-full h-full min-h-dvh flex flex-col justify-center items-center gap-8 px-4 text-foreground sm:gap-10'>
       <div className='fixed inset-0 -z-10'>
           <DotField
             dotRadius={1.5}
@@ -25,10 +25,10 @@ const page = () => {
       </div>
 
       <div className='flex flex-col items-center gap-2 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
-        <h1 className='text-white bg-clip-text text-5xl font-bold tracking-tight sm:text-6xl'>
+        <h1 className='text-white bg-clip-text text-3xl font-bold tracking-tight sm:text-5xl md:text-6xl'>
           Short link generator
         </h1>
-        <h2 className='text-lg font-light text-muted-foreground'>Generate short links</h2>
+        <h2 className='text-base font-light text-muted-foreground sm:text-lg'>Generate short links</h2>
       </div>
 
       <CreateLink />

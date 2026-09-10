@@ -1,0 +1,1 @@
+Short link generator — generate short links

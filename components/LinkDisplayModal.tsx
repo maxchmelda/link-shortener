@@ -19,10 +19,10 @@ const LinkDisplayModal = ({ url, open, onClose } : Props) => {
                 <DialogDescription>Copy the link, so you don't lose it.</DialogDescription>
             </DialogHeader>
 
-            <div className='flex items-center justify-between gap-2'>
-                <span className='w-full truncate rounded-xl border border-white/10 bg-muted/50 px-3 py-2 text-start font-mono text-sm cursor-text'>{url ?? ""}</span>
+            <div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
+                <span className='min-w-0 flex-1 truncate rounded-xl border border-white/10 bg-muted/50 px-3 py-2 text-start font-mono text-xs sm:text-sm cursor-text'>{url ?? ""}</span>
                 <Button
-                    className="flex shrink-0 items-center gap-2 justify-center rounded-xl px-3 py-2 cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95"
+                    className="flex w-full shrink-0 items-center gap-2 justify-center rounded-xl px-3 py-2 cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 sm:w-auto"
                     onClick={() => navigator.clipboard.writeText(url ?? "")}
                 >
                     <MdContentCopy />

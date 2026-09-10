@@ -6,7 +6,7 @@ import DotField from '@/components/DotField'
 
 const page = () => {
   return (
-    <div className="w-full h-full min-h-screen flex flex-col justify-center items-center gap-6 px-4 text-foreground">
+    <div className="w-full h-full min-h-dvh flex flex-col justify-center items-center gap-6 px-4 text-foreground">
     <div className='fixed inset-0 -z-10'>
           <DotField
             dotRadius={1.5}
@@ -25,10 +25,10 @@ const page = () => {
       </div>
 
       <div className='flex flex-col items-center gap-3 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
-        <span className='text-7xl font-bold tracking-tight text-foreground sm:text-8xl'>
+        <span className='text-6xl font-bold tracking-tight text-foreground sm:text-7xl md:text-8xl'>
           404
         </span>
-        <h1 className='text-2xl font-semibold'>Page not found</h1>
+        <h1 className='text-xl font-semibold sm:text-2xl'>Page not found</h1>
         <p className='max-w-sm text-muted-foreground'>
           This short link doesn&apos;t exist, is broken, or has expired.
         </p>

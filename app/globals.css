@@ -122,10 +122,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
   html {
-    @apply font-sans;
+    /* Background lives on html, not body: body's background would paint above
+       negative z-index children and cover the DotField. On html it propagates
+       to the canvas, which also covers iOS Safari's rubber-band overscroll. */
+    @apply bg-background font-sans;
+    -webkit-tap-highlight-color: transparent;
   }
   ::selection {
     @apply bg-primary/30 text-foreground;
