@@ -12,7 +12,7 @@ import ErrorMessage from './ErrorMessage';
 
 const CreateLink = () => {
   const [url, setUrl] = React.useState<string>("");
-  const [error, setError] = React.useState<string | null>("Some error i dont know wth!");
+  const [error, setError] = React.useState<string | null>(null);
   const [shortenedUrl, setShortenedUrl] = React.useState<string | null>(null);
 
   React.useEffect(() => {
