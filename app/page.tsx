@@ -24,7 +24,7 @@ const page = () => {
         />
       </div>
 
-      <div className='flex flex-col items-center gap-2 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
+      <div className='cursor-default flex flex-col items-center gap-2 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out'>
         <h1 className='text-white bg-clip-text text-3xl font-bold tracking-tight sm:text-5xl md:text-6xl'>
           Short link generator
         </h1>

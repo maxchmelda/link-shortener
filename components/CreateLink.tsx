@@ -8,12 +8,14 @@ import LinkDisplayModal from './LinkDisplayModal';
 import shortenUrl from '@/lib/shortenUrl';
 import isUrlValid from '@/lib/isUrlValid';
 import ErrorMessage from './ErrorMessage';
+import { Spinner } from './ui/spinner';
 
 
 const CreateLink = () => {
-  const [url, setUrl] = React.useState<string>("");
+  const [url, setUrl] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
   const [shortenedUrl, setShortenedUrl] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (error) {
@@ -25,15 +27,17 @@ const CreateLink = () => {
 
   const handleShorten = async () => {
     try {
+      setLoading(true);
       if (!isUrlValid(url)) {
         setError("Please enter a valid link!");
         return;
       }
-
       const shortened = await shortenUrl(url);
       setShortenedUrl(shortened);
     } catch (err) {
       setError("Couldn't shorten url, please try again.")
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -58,11 +62,18 @@ const CreateLink = () => {
           value={url}
         />
         <Button
+          disabled={loading}
           variant="default"
-          className="h-11 shrink-0 rounded-xl cursor-pointer transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97]"
+          className=" h-11 shrink-0 w-20 rounded-xl cursor-pointer transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97]"
           onClick={() => handleShorten()}
         >
-          Shorten
+          {
+            loading ? (
+              <Spinner />
+            ) : (
+              "Shorten"
+            )
+          }
         </Button>
       </div>
       
